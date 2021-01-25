@@ -59,7 +59,7 @@ class hookLibrary {
 
     def(type, obj, key, func, configurable = true) {
         //remove
-        if (key in obj) {
+        if (key in obj && obj[key]) {
             var val = obj[key];
             delete obj[key];
         }
@@ -97,8 +97,8 @@ class hookLibrary {
             for (var tmp of "GS") {
                 var method = `__lookup${tmp}etter__`,
                     orig = _object[method];
-                    _object[method] = function () {}; //return nothing
-                this.conceal_string(orig, _object[method]);
+                    //_object[method] = function () {}; //return nothing
+               // this.conceal_string(orig, _object[method]);
             }
         }
     }
@@ -106,7 +106,7 @@ class hookLibrary {
     //for tracking objects and scopes
     scopes = [];
     scopev = [];
-    
+
     var(scope, key, callback) {
         var descriptor = this.original_descriptor(scope, key);
 
