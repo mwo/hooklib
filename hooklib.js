@@ -1,5 +1,6 @@
 class hookLibrary {
     constructor() {
+        //hide getter and setter
         var _this = this,
             _Object = Object,
             original_descriptors = Object.getOwnPropertyDescriptors,
@@ -51,13 +52,27 @@ class hookLibrary {
 
         this.hides.conceal_string(original_descriptors, Object.getOwnPropertyDescriptors);
         this.hides.conceal_string(original_descriptor, Object.getOwnPropertyDescriptor);
+
+        //keep original
+        this.original_descriptor = original_descriptor;
     }
 
     def(type, obj, key, func, configurable = true) {
+        //remove
+        if (key in obj) {
+            var val = obj[key];
+            delete obj[key];
+        }
+
         Object.defineProperty(obj, key,{
             [type]: func,
             configurable
         });
+
+
+        //restore
+        if (val && type == 'set')
+            obj[key] = val;
     }
 
     hides = {
@@ -93,6 +108,12 @@ class hookLibrary {
     scopev = [];
     
     var(scope, key, callback) {
+        var descriptor = this.original_descriptor(scope, key);
+
+        //:)
+        if (descriptor && descriptor.configurable == false)
+            throw Error(`"${key}" is unconfigurable!`);
+
         var scopeIndex = this.scopes.indexOf(scope),
             notFound = scopeIndex < 0;
 
