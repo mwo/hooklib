@@ -21,7 +21,7 @@ var foo = 10;
 
 console.log(foo) // -> 20
 ```
-Here's the same example but with a already define, configerable property.
+Here's the same example but with a already defined configerable property.
 ```js
 var hooklib = new hookLibrary();
 
