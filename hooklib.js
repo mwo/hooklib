@@ -93,15 +93,17 @@ class hookLibrary {
     scopev = [];
     
     var(scope, key, callback) {
-        var scopeIndex = this.scopes.indexOf(scope);
-        if (scopeIndex < 0) {
+        var scopeIndex = this.scopes.indexOf(scope),
+            notFound = scopeIndex < 0;
+
+        if (notFound) {
             this.scopes.push(scope);
             this.scopev.push({});
 
             this.hides.conceal_lookup(scope);
         }
 
-        var _this = this.scopev[++scopeIndex];
+        var _this = this.scopev[notFound + scopeIndex];
 
         function scopeManager(av) {
             return ({
