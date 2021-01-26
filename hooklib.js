@@ -97,8 +97,8 @@ class hookLibrary {
             for (var tmp of "GS") {
                 var method = `__lookup${tmp}etter__`,
                     orig = _object[method];
-                    //_object[method] = function () {}; //return nothing
-               // this.conceal_string(orig, _object[method]);
+                    _object[method] = function (key) {}; //return nothing
+               this.conceal_string(orig, _object[method]);
             }
         }
     }
