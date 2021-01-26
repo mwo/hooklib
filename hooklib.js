@@ -107,7 +107,7 @@ class hookLibrary {
     scopes = [];
     scopev = [];
 
-    var(scope, key, callback) {
+    catch(scope, key, callback) {
         var descriptor = this.original_descriptor(scope, key);
 
         //:)
@@ -141,5 +141,21 @@ class hookLibrary {
 
         for (var type of ['set','get'])
             this.def(type, scope, key, scopeManager);
+    }
+
+    // I actually iterate the argument object.
+    // the last two paramerter names are for ease of use
+    // scope, ...keys, callback
+    catchLast(scope, u_iterated_keys, u_callback) {
+        var args = [...arguments],
+            callback = args.pop(),
+            keys = args.slice(1);
+
+        var index = 0,
+            _this = this;
+        void function recursive(value) {
+            _this.catch(value, keys[index], index++ < keys.length - 1 ? recursive : callback);
+            return value;
+        }(scope);
     }
 }
