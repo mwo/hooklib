@@ -8,7 +8,7 @@ var hooklib = new hookLibrary();
 
 //async
 // scope, property, callback
-hooklib.var(window, 'foo', function (value) {
+hooklib.catch(window, 'foo', function (value) {
   return value * 2; 
 });
 ```
@@ -29,7 +29,7 @@ var obj = { foo: 10 };
 
 //async
 // scope, property, callback
-hooklib.var(obj, 'foo', function (value) {
+hooklib.catch(obj, 'foo', function (value) {
   return value * 2; 
 });
 
