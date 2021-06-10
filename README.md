@@ -12,7 +12,7 @@ hooklib.catch(window, 'foo', function (value) {
   return value * 2; 
 });
 ```
-Because var method is async and it needs a configurable property to run,
+Because `catch` method is async and it needs a configurable property to run,
 it must finish before `foo` is declared.
 
 ```js
